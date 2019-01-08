@@ -5,7 +5,7 @@
  * Date: 8/01/19
  * Time: 05:31 PM
  */
-$version = '190108';
+$version = '0.0.0';
 define('SEED', 'crypt0w4113t');
 
 require "libs/system.php";
