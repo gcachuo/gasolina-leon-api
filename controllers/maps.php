@@ -10,18 +10,30 @@ class Maps
 {
     function getData()
     {
-        $data = [
-            [
-                'company' => 'Oxxo Gas',
-                'position' => ['lat' => 21.1413763, 'lng' => -101.6602022],
-                'active' => 1
-            ],
-            [
-                'company' => 'Pemex',
-                'position' => ['lat' => 21.1439166, 'lng' => -101.6586434],
-                'active' => 0
-            ]
-        ];
+        $sql = <<<sql
+select 
+       id_gasolinera id,
+       nombre_gasolinera name,
+       company_gasolinera company,
+       latitud_gasolinera lat,
+       longitud_gasolinera lng,
+       estatus_gasolinera status
+ from gasolineras;
+sql;
+
+        $results = db_all_results($sql);
+        $data = [];
+        foreach ($results as $result) {
+            array_push($data, [
+                'name'=>$result['name'],
+                'company' => $result['company'],
+                'position' => [
+                    'lat' => $result['lat'],
+                    'lng' => $result['lng']
+                ],
+                'active' => $result['status']
+            ]);
+        }
         return compact('data');
     }
 }
