@@ -45,3 +45,13 @@ function auto_loader($clase)
 {
     include 'controllers/' . $clase . '.php';
 }
+
+/**
+ * @param string $error
+ * @param int $code
+ * @throws Exception
+ */
+function set_error($error, $code = 0)
+{
+    throw new Exception($error, $code);
+}
