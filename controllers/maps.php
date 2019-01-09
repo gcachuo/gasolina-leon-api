@@ -25,7 +25,8 @@ sql;
         $data = [];
         foreach ($results as $result) {
             array_push($data, [
-                'name'=>$result['name'],
+                'id' => $result['id'],
+                'name' => $result['name'],
                 'company' => $result['company'],
                 'position' => [
                     'lat' => $result['lat'],
@@ -35,5 +36,19 @@ sql;
             ]);
         }
         return compact('data');
+    }
+
+    function changeStatus()
+    {
+        $id = $_REQUEST['id'];
+        $status = $_REQUEST['status'] == 'true' ? 1 : 0;
+
+        $sql = <<<sql
+update gasolineras set estatus_gasolinera=$status where id_gasolinera='$id';
+sql;
+
+        db_query($sql);
+
+        return true;
     }
 }
