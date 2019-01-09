@@ -1,5 +1,6 @@
 RewriteEngine on
 
+RewriteBase /
 RewriteCond %{REQUEST_URI} gasolina-leon-api
 RewriteBase /gasolina-leon-api/
 
