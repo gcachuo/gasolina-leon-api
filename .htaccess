@@ -1,3 +1,6 @@
 RewriteEngine on
+
+RewriteCond %{REQUEST_URI} gasolina-leon-api
 RewriteBase /gasolina-leon-api/
+
 RewriteRule (.[^\/]*)\/(.[^\/?]*)[?]?(.[^\/]*)?$ index.php?controller=$1&action=$2&%{QUERY_STRING} [NC,L]
