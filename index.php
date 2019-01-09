@@ -20,6 +20,7 @@ set_error_handler('error_handler');
 register_shutdown_function('shutdown_function');
 
 header('Content-type: application/json');
+header("Access-Control-Allow-Origin: *");
 
 try {
 
