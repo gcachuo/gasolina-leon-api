@@ -18,7 +18,7 @@ select
        latitud_gasolinera lat,
        longitud_gasolinera lng,
        coalesce(max(hg.estatus_gasolinera),0) status,
-       tamaño_gasolinera size,
+       size_gasolinera size,
        tiempo_gasolinera time
  from gasolineras g
 left join historial_gasolineras hg on hg.id_gasolinera=g.id_gasolinera
