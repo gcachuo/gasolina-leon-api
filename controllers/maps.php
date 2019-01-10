@@ -29,6 +29,7 @@ WHERE id_historial_gasolinera IN (
     where fecha_historial_gasolinera >= DATE_SUB(NOW(), INTERVAL 2 HOUR)
     GROUP BY id_gasolinera
 )) hg on g.id_gasolinera=hg.id_gasolinera
+order by status desc, id
 sql;
 
         $results = db_all_results($sql);
