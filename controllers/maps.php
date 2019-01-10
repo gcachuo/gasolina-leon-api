@@ -11,14 +11,16 @@ class Maps
     function getData()
     {
         $sql = <<<sql
-select 
-       id_gasolinera id,
+select
+       g.id_gasolinera id,
        nombre_gasolinera name,
        company_gasolinera company,
        latitud_gasolinera lat,
        longitud_gasolinera lng,
-       estatus_gasolinera status
- from gasolineras;
+       coalesce(max(hg.estatus_gasolinera),0) status
+ from gasolineras g
+left join historial_gasolineras hg on hg.id_gasolinera=g.id_gasolinera
+group by g.id_gasolinera;
 sql;
 
         $results = db_all_results($sql);
@@ -44,7 +46,7 @@ sql;
         $status = $_REQUEST['status'] == 'true' ? 1 : 0;
 
         $sql = <<<sql
-update gasolineras set estatus_gasolinera=$status where id_gasolinera='$id';
+insert into historial_gasolineras(id_gasolinera,estatus_gasolinera) values ('$id',$status);
 sql;
 
         db_query($sql);
