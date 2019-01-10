@@ -46,7 +46,7 @@ sql;
         $status = $_REQUEST['status'] == 'true' ? 1 : 0;
 
         $sql = <<<sql
-insert into historial_gasolineras(id_gasolinera,estatus_gasolinera) values ('$id',$status);
+insert into historial_gasolineras(id_gasolinera,estatus_gasolinera,responsable_registro) values ('$id',$status,'Server');
 sql;
 
         db_query($sql);
