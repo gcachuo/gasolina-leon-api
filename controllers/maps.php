@@ -17,12 +17,17 @@ select
        company_gasolinera company,
        latitud_gasolinera lat,
        longitud_gasolinera lng,
-       coalesce(max(hg.estatus_gasolinera),0) status,
-       size_gasolinera size,
-       tiempo_gasolinera time
+       coalesce(estatus_gasolinera,0) status,
+      coalesce(size_gasolinera,0) size,
+      coalesce(tiempo_gasolinera,0) time
  from gasolineras g
-left join historial_gasolineras hg on hg.id_gasolinera=g.id_gasolinera
-group by g.id_gasolinera;
+left join (SELECT *
+FROM historial_gasolineras
+WHERE id_historial_gasolinera IN (
+    SELECT MAX(id_historial_gasolinera)
+    FROM historial_gasolineras
+    GROUP BY id_gasolinera
+)) hg on g.id_gasolinera=hg.id_gasolinera
 sql;
 
         $results = db_all_results($sql);
