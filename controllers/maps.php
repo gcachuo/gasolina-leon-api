@@ -26,6 +26,7 @@ FROM historial_gasolineras
 WHERE id_historial_gasolinera IN (
     SELECT MAX(id_historial_gasolinera)
     FROM historial_gasolineras
+    where fecha_historial_gasolinera >= DATE_SUB(NOW(), INTERVAL 2 HOUR)
     GROUP BY id_gasolinera
 )) hg on g.id_gasolinera=hg.id_gasolinera
 sql;
