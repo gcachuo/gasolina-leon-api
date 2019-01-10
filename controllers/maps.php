@@ -17,7 +17,9 @@ select
        company_gasolinera company,
        latitud_gasolinera lat,
        longitud_gasolinera lng,
-       coalesce(max(hg.estatus_gasolinera),0) status
+       coalesce(max(hg.estatus_gasolinera),0) status,
+       tamaño_gasolinera size,
+       tiempo_gasolinera time
  from gasolineras g
 left join historial_gasolineras hg on hg.id_gasolinera=g.id_gasolinera
 group by g.id_gasolinera;
@@ -34,6 +36,8 @@ sql;
                     'lat' => $result['lat'],
                     'lng' => $result['lng']
                 ],
+                'size'=> $result['size'],
+                'time'=> $result['time'],
                 'active' => $result['status']
             ]);
         }
