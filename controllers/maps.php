@@ -19,7 +19,9 @@ select
        longitud_gasolinera lng,
        coalesce(estatus_gasolinera,0) status,
       coalesce(size_gasolinera,0) size,
-      coalesce(tiempo_gasolinera,0) time
+      coalesce(tiempo_gasolinera,0) time,
+      coalesce(responsable_registro,'Sistema') rep,
+       coalesce(fecha_historial_gasolinera,'2019-01-08') fecha
  from gasolineras g
 left join (SELECT *
 FROM historial_gasolineras
@@ -37,14 +39,16 @@ sql;
         foreach ($results as $result) {
             array_push($data, [
                 'id' => $result['id'],
-                'name' => $result['name'],
+                'name' => htmlentities(utf8_encode($result['name'])),
                 'company' => $result['company'],
                 'position' => [
                     'lat' => $result['lat'],
                     'lng' => $result['lng']
                 ],
-                'size'=> $result['size'],
-                'time'=> $result['time'],
+                'size' => [0 => 'Desconocida', 1 => 'Pequeña', 2 => 'Mediana', 3 => 'Grande', 4 => 'Excesiva'][$result['size']],
+                'time' => [0 => 'Desconocido', 1 => 'Corto', 2 => 'Regular', 3 => 'Largo', 4 => 'Eterno'][$result['time']],
+                'rep' => htmlentities(utf8_encode($result['rep'])),
+                'updated' => date('d-m-Y H:i:s', strtotime($result['fecha'])),
                 'active' => $result['status']
             ]);
         }
@@ -54,10 +58,11 @@ sql;
     function changeStatus()
     {
         $id = $_REQUEST['id'];
-        $status = $_REQUEST['status'] == 'true' ? 1 : 0;
+        $responsable = isset_get($_REQUEST['responsable'], 'Server');
+        $status = $_REQUEST['status'] == '1' ? 1 : 0;
 
         $sql = <<<sql
-insert into historial_gasolineras(id_gasolinera,estatus_gasolinera,responsable_registro) values ('$id',$status,'Server');
+insert into historial_gasolineras(id_gasolinera,estatus_gasolinera,responsable_registro) values ('$id',$status,'$responsable');
 sql;
 
         db_query($sql);
