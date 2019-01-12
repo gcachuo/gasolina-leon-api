@@ -58,11 +58,13 @@ sql;
     function changeStatus()
     {
         $id = $_REQUEST['id'];
-        $responsable = isset_get($_REQUEST['responsable'], 'Server');
         $status = $_REQUEST['status'] == '1' ? 1 : 0;
+        $responsable = isset_get($_REQUEST['responsable'], 'Server');
+        $fila = isset_get($_REQUEST['fila'], 0);
+        $tiempo = isset_get($_REQUEST['tiempo'], 0);
 
         $sql = <<<sql
-insert into historial_gasolineras(id_gasolinera,estatus_gasolinera,responsable_registro) values ('$id',$status,'$responsable');
+insert into historial_gasolineras(id_gasolinera,estatus_gasolinera,responsable_registro,size_gasolinera,tiempo_gasolinera) values ('$id',$status,'$responsable',$fila,$tiempo);
 sql;
 
         db_query($sql);
