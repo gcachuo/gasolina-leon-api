@@ -59,7 +59,7 @@ sql;
     {
         $id = $_REQUEST['id'];
         $status = $_REQUEST['status'] == '1' ? 1 : 0;
-        $responsable = utf8_decode(isset_get($_REQUEST['responsable'], 'Server');
+        $responsable = utf8_decode(isset_get($_REQUEST['responsable'], 'Server'));
         $fila = isset_get($_REQUEST['fila'], 0);
         $tiempo = isset_get($_REQUEST['tiempo'], 0);
 
